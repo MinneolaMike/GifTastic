@@ -6,92 +6,83 @@ $(document).ready(function () {
 
     function renderButtons() {
 
-        // Deleting the movie buttons prior to adding new movie buttons
-        // (this is necessary otherwise we will have repeat buttons)
+        // Clears the array of the pre-set buttons to allow for just the new button to populate
         $("#buttonzone").empty();
 
-        // Looping through the array of movies
+        // Looping through the array suggested topics
         for (var i = 0; i < suggested.length; i++) {
 
-            // Then dynamicaly generating buttons for each movie in the array.
-            // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
+            // Variable to create the button
             var button = $("<button>");
-            // Adding a class
+            // Adds a class to the button
             button.addClass("topic");
-            // Adding a data-attribute with a value of the movie at index i
+            // Adds an attribute to the button to house the topic in the input field
             button.attr("data-name", suggested[i]);
-            // Providing the button's text with a value of the movie at index i
+            // Gives the button it's nmae
             button.text(suggested[i]);
-            // Adding the button to the HTML
+            // Adds Button to the page
             $("#buttonzone").prepend(button);
         }
     }
+    // Calling the function to run on document ready
     renderButtons();
 
+    //Click event for the add more topics button
     $("#search").on("click", function (event) {
         // event.preventDefault() prevents the form from trying to submit itself.
-        // We're using a form so that the user can hit enter instead of clicking the button if they want
         event.preventDefault();
-
-        // This line will grab the text from the input box
+        // Variable to capture what the user has enetered and trim out all extra spaces
         var newtopic = $("#textarea").val().trim();
-        // The movie from the textbox is then added to our array
+        // Handles putting the button on the page
         suggested.push(newtopic);
-
-        // calling renderButtons which handles the processing of our movie array
+        // Calling the function again here so that it fires when they hit the add button 
         renderButtons();
     });
 
+    // Function that will add GIF's to the page when they click a topic button
     $(document).on("click", ".topic", showGIF);
-    // displayMovieInfo function re-renders the HTML to display the appropriate content
+
     function showGIF() {
 
+        //Variable to take the name of the button and run it through the GIPHY API
         var buttonpicked = $(this).attr("data-name");
+        //URL for Giphy API for searching including my key
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + buttonpicked + "&api_key=ZrF1pqmshLKHkJwaz3V7vO5ol3tHXOLm&limit=10";
 
-        // Creating an AJAX call for the specific movie button being clicked
+        // AJAX call to the Giphy API
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
 
-            // Storing an array of results in the results variable
+            // Variable to store the ENTIRE response from GIPHY API
             var result = response.data;
 
-            // Looping over every result item
+            // Looping over the response from the API
             for (var i = 0; i < result.length; i++) {
-
-                // Only taking action if the photo has an appropriate rating
+                // Checking the rating of the response to make sure it is G or PG only
                 if (result[i].rating !== "r" && result[i].rating !== "pg-13") {
-                    // Creating a div with the class "item"
-                    var gifDiv = $("<div class='item'>");
-
-                    // Storing the result item's rating
+                    // Creating a DIV to house the returned, rating appropriate Gif
+                    var gifDiv = $("<div>");
+                    // Adds a class to the Div for targeting
+                    gifDiv.addClass("gifbox");
+                    // Variable to store the rating
                     var rating = result[i].rating;
-
-                    // Creating a paragraph tag with the result item's rating
+                    // Creates a <p> tag to display the rating
                     var one = $("<p>").text("Rating: " + rating);
-
-                    // Storing the result item's rating
+                    // Variable to store the Title
                     var title = result[i].title;
-
-                    // Creating a paragraph tag with the result item's rating
+                    // Creates a <p> tag to display the title
                     var two = $("<p>").text("Title: " + title);
-
-                    // Creating an image tag
+                    // Creating an <img> tag to display the GIF
                     var gifImage = $("<img>");
-
-                    // Giving the image tag an src attribute of a proprty pulled off the
-                    // result item
-                    gifImage.attr("src", result[i].images.fixed_width_still.url);
-
-                    // Appending the paragraph and personImage we created to the "gifDiv" div we created
+                    // Giving the <img> tag a src of Fixed Still to be able to animate the Gifs when clicked later
+                    gifImage.attr("src", result[i].images.fixed_height_still.url);
+                    // Appends the GIF, rating, and title into the Div created
                     gifDiv.append(two);
-                    gifDiv.append(one)
+                    gifDiv.append(one);
                     gifDiv.append(gifImage);
-
-                    // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+                    // Actually adds the entire Div to the page
                     $("#GIFarea").prepend(gifDiv);
                 }
             }
