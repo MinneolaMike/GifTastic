@@ -1,3 +1,12 @@
 .navbar {
     background-color: #FCECA9;
 }
+
+.topic {
+    margin: 2%;
+    padding: 1%;
+}
+
+.topic:hover {
+    
+}
