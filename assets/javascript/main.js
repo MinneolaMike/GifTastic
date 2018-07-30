@@ -76,6 +76,10 @@ $(document).ready(function () {
                     var two = $("<p>").text("Title: " + title);
                     // Creating an <img> tag to display the GIF
                     var gifImage = $("<img>");
+                    // Adding a class to the image to target it later
+                    gifImage.addClass("still");
+                    // adding a data-state to the gif to target later in animation
+                    gifImage.attr("data-state", "paused");
                     // Giving the <img> tag a src of Fixed Still to be able to animate the Gifs when clicked later
                     gifImage.attr("src", result[i].images.fixed_height_still.url);
                     // Appends the GIF, rating, and title into the Div created
@@ -87,5 +91,19 @@ $(document).ready(function () {
                 }
             }
         });
-    }
+    };
+
+    //On Click function that will animate teh GIF's
+    $(document).on("click", ".still" ,function() {
+        // declaring a variable to identify if the image is paused or not
+        var animationState = $(".still").attr("data-state");
+        // If/Else statement that will switch between animated and still image based on the paused attribute
+        if (animationState === "paused") {
+          $(".still").attr("src", result[i].images.fixed_height.url);
+          $(".still").attr("data-state", "moving");
+        } else {
+          $(".still").attr("src", result[i].images.fixed_height_still.url);
+          $(".still").attr("data-state", "paused");
+        }
+      });
 })
