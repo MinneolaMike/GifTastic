@@ -81,11 +81,11 @@ $(document).ready(function () {
                     // adding a data-state to the gif to target later in animation
                     gifImage.attr("data-state", "paused");
                     // Giving the <img> tag a src of Fixed Still to be loaded on search
-                    gifImage.attr("src", result[i].images.fixed_height_still.url);
+                    gifImage.attr("src", result[i].images.fixed_width_still.url);
                     // Giving the <img> tag an atrribute linked to a url for animation
-                    gifImage.attr("data-paused", result[i].images.fixed_height_still.url);
+                    gifImage.attr("data-paused", result[i].images.fixed_width_still.url);
                     // Giving the <img> tag the other linked url with different state for animation 
-                    gifImage.attr("data-moving", result[i].images.fixed_height.url);
+                    gifImage.attr("data-moving", result[i].images.fixed_width.url);
                     // Appends the GIF, rating, and title into the Div created
                     gifDiv.append(two);
                     gifDiv.append(one);
