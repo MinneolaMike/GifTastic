@@ -80,8 +80,12 @@ $(document).ready(function () {
                     gifImage.addClass("still");
                     // adding a data-state to the gif to target later in animation
                     gifImage.attr("data-state", "paused");
-                    // Giving the <img> tag a src of Fixed Still to be able to animate the Gifs when clicked later
+                    // Giving the <img> tag a src of Fixed Still to be loaded on search
                     gifImage.attr("src", result[i].images.fixed_height_still.url);
+                    // Giving the <img> tag an atrribute linked to a url for animation
+                    gifImage.attr("data-paused", result[i].images.fixed_height_still.url);
+                    // Giving the <img> tag the other linked url with different state for animation 
+                    gifImage.attr("data-moving", result[i].images.fixed_height.url);
                     // Appends the GIF, rating, and title into the Div created
                     gifDiv.append(two);
                     gifDiv.append(one);
@@ -90,20 +94,21 @@ $(document).ready(function () {
                     $("#GIFarea").prepend(gifDiv);
                 }
             }
+
+            //On Click function that will animate teh GIF's
+            $(document).on("click", ".still", function () {
+                // declaring a variable to identify if the image is paused or not
+                var animationState = $(".still").attr("data-state");
+                // If/Else statement that will switch between animated and still image based on the paused attribute
+                if (animationState === "paused") {
+                    console.log(result[i]);
+                    $(this).attr("src", $(this).attr("data-moving"));
+                    $(this).attr("data-state", "moving");
+                } else {
+                    $(this).attr("src", $(this).attr("data-paused"));
+                    $(this).attr("data-state", "paused");
+                }
+            });
         });
     };
-
-    //On Click function that will animate teh GIF's
-    $(document).on("click", ".still" ,function() {
-        // declaring a variable to identify if the image is paused or not
-        var animationState = $(".still").attr("data-state");
-        // If/Else statement that will switch between animated and still image based on the paused attribute
-        if (animationState === "paused") {
-          $(".still").attr("src", result[i].images.fixed_height.url);
-          $(".still").attr("data-state", "moving");
-        } else {
-          $(".still").attr("src", result[i].images.fixed_height_still.url);
-          $(".still").attr("data-state", "paused");
-        }
-      });
 })

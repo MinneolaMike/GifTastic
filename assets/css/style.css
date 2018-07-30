@@ -8,14 +8,14 @@
     
 }
 
-/* .gifbox { */
-    /* margin: auto; */
-    /* width: 50%; */
-    /* overflow: auto; */
-/* } */
+#GIFarea {
+    margin: auto;
+    width: 50%;
+    overflow: auto;
+}
 
-/* .gifbox:nth-child(2n) { */
-    /* float: right; */
-    /* overflow: auto; */
+#GIFarea:nth-child(2n) {
+    float: right;
+    overflow: auto;
     
-/* } */
+}
