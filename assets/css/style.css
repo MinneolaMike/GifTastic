@@ -11,8 +11,8 @@
 .gifbox {
     float: left;
     width: 270px;
-    height: 250px;
-    max-height: 250px;
+    height: 300px;
+    max-height: 300px;
     margin: 10px 0px 10px 0px;
     overflow: auto;
 }
@@ -23,7 +23,7 @@
 }
 
 .still {
-    height: 125px;
+    height: 80px;
     width: 200px;
 }
 
