@@ -22,6 +22,11 @@
     overflow: auto;
 }
 
+.still {
+    height: 150px;
+    width: 200px;
+}
+
 p {
     margin: 0px;
     font-size: 18px;
